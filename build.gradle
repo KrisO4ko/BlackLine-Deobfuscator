@@ -1,0 +1,51 @@
+plugins {
+    id 'application'
+}
+
+group = 'sc.krisstal'
+version = '1.0.0'
+description = 'BlackLine JAR unpacker and deobfuscator'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+}
+
+application {
+    mainClass = 'sc.krisstal.BlackLineDeobfuscator'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+tasks.named('jar') {
+    archiveBaseName = 'blackline-deobfuscator'
+    manifest {
+        attributes(
+                'Main-Class': application.mainClass.get(),
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+}
+
+tasks.named('distZip') {
+    archiveBaseName = 'blackline-deobfuscator'
+}
+
+tasks.named('distTar') {
+    archiveBaseName = 'blackline-deobfuscator'
+}
