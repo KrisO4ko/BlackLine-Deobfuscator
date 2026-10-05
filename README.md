@@ -21,12 +21,6 @@ gradle clean build
 build/libs/blackline-deobfuscator-1.0.0.jar
 ```
 
-Если Gradle не установлен:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\build.ps1
-```
-
 ## Использование
 
 ```powershell
